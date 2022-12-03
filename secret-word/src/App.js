@@ -26,11 +26,21 @@ function App() {
   const [words] = useState(wordsList)
   console.log(words);
 
+  // Starts the secret word game
+const startGame = () => {
+  setGameStage(stages[1].name)
+}
+
+// Process the letter in the input
+const verifyLetter = () => {
+  setGameStage(stages[3].name)
+}
+
   return (
     <div className="App">
       {/* <StartScreen /> */}
-      {gameStage === 'start' && <StartScreen />}
-      {gameStage === 'game' && <Game />}
+      {gameStage === 'start' && <StartScreen startGame={startGame} />}
+      {gameStage === 'game' && <Game verifyLetter={verifyLetter} />}
       {gameStage === 'end' && <GameOver />}
     </div>
   );
