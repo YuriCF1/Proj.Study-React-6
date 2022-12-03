@@ -33,7 +33,13 @@ const startGame = () => {
 
 // Process the letter in the input
 const verifyLetter = () => {
-  setGameStage(stages[3].name)
+  setGameStage(stages[2].name)
+}
+
+// Restarts the game
+const retry = () => {
+  setGameStage(stages[0].name)
+
 }
 
   return (
@@ -41,7 +47,7 @@ const verifyLetter = () => {
       {/* <StartScreen /> */}
       {gameStage === 'start' && <StartScreen startGame={startGame} />}
       {gameStage === 'game' && <Game verifyLetter={verifyLetter} />}
-      {gameStage === 'end' && <GameOver />}
+      {gameStage === 'end' && <GameOver retry={retry}/>}
     </div>
   );
 }
