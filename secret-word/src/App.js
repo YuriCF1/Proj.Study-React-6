@@ -51,8 +51,11 @@ function App() {
 
     wordLetters = wordLetters.map((letter) => letter.toLowerCase())
 
-    console.log(wordLetters);
-
+    //fill state
+    setPickedWord(word)
+    setPickedCatergory(category)
+    setLetters(letters)   
+      
   setGameStage(stages[1].name)
 }
 
