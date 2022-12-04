@@ -24,10 +24,35 @@ const stages = [
 function App() {
   const [gameStage, setGameStage] = useState(stages[0].name)
   const [words] = useState(wordsList)
-  console.log(words);
 
+  const [pickedWord, setPickedWord] = useState("")
+  const [pickedCatergory, setPickedCatergory] = useState("")
+  const [letters, setLetters] = useState("")
+
+  const pickedWordAndCatergory = () => {
+    // Pick a random category
+    const categories = Object.keys(words)
+    // console.log(categories);
+    
+    let randomCategory = Math.floor(Math.random() * Object.keys(categories).length);
+    const category = categories[randomCategory]
+    // console.log(randomCategory);
+    console.log(category);
+
+    // Pick a random category
+    const word = words[category][Math.floor(Math.random() * words[category].length)]
+    console.log(word);
+  
+    return {word, category} //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
+  }  
+  
   // Starts the secret word game
-const startGame = () => {
+  const startGame = () => {
+    //Pick word and pick category
+    pickedWordAndCatergory()
+    const { word, category } = pickedWordAndCatergory()
+    console.log(word, category);
+
   setGameStage(stages[1].name)
 }
 
