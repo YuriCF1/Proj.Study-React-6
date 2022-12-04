@@ -31,17 +31,12 @@ function App() {
 
   const pickedWordAndCatergory = () => {
     // Pick a random category
-    const categories = Object.keys(words)
-    // console.log(categories);
-    
+    const categories = Object.keys(words)    
     let randomCategory = Math.floor(Math.random() * Object.keys(categories).length);
     const category = categories[randomCategory]
-    // console.log(randomCategory);
-    console.log(category);
 
     // Pick a random category
     const word = words[category][Math.floor(Math.random() * words[category].length)]
-    console.log(word);
   
     return {word, category} //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
   }  
@@ -49,9 +44,14 @@ function App() {
   // Starts the secret word game
   const startGame = () => {
     //Pick word and pick category
-    pickedWordAndCatergory()
     const { word, category } = pickedWordAndCatergory()
-    console.log(word, category);
+
+    //Creating am array of letters
+    let wordLetters = word.split("")
+
+    wordLetters = wordLetters.map((letter) => letter.toLowerCase())
+
+    console.log(wordLetters);
 
   setGameStage(stages[1].name)
 }
