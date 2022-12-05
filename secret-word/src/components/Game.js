@@ -30,10 +30,6 @@ const Game = ({verifyLetter}) => {
         <span>d, e</span>
       </div>
     </div>
-    // <div>
-    //   <h1>Game</h1>
-    //   <button onClick={verifyLetter}>Finalizar jogo</button>
-    // </div>
   )
 }
 
