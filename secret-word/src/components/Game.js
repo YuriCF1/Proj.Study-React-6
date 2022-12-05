@@ -2,20 +2,29 @@ import style from './Game.module.css'
 
 import React from 'react'
 
-const Game = ({verifyLetter}) => {
+const Game = ({verifyLetter, pickedWord, pickedCategory, letters, guessedLetters, wrongLetters, guesses, score}) => {
   return (
 
     <div className={style.game}>
       <p className={style.points}>
-        <span>Pontuação: 000</span>
+        <span>Pontuação: {score}</span>
       </p>
       <h1>Advinhe a palavra</h1>
       <h3 className={style.tip}>
-        Dica sobre a palavra: <span>Dica...</span>
+        Dica sobre a palavra: <span>{pickedCategory}</span>
       </h3>
+      <p>Você ainda tem {guesses} tentativa(s)</p>
       <div className={style.wordContainer}>
-        <span className={style.letter}>A</span>
-        <span className={style.blankSquare}>B</span>
+        {letters.map((letter, index) => (
+          guessedLetters.includes(letter) ? (
+            <span key={index} className={style.letter}>{letter}</span>
+
+          ) : (
+            <span key={index} className={style.blankSquare}></span>
+          )
+        ))}
+        {/* <span className={style.letter}>A</span>
+        <span className={style.blankSquare}>B</span> */}
       </div>
       <div className={style.letterContainer}>
         <p>Tente advinha a letra da palavra</p>
@@ -26,8 +35,11 @@ const Game = ({verifyLetter}) => {
       </div>
       <div className={style.wrongLettersContainer}>
         <p>Letras já utilizadas</p>
-        <span>b, c</span>
-        <span>d, e</span>
+        {wrongLetters.map((letter, index) => (
+          <span key={index}>{letter}</span>
+        ))}
+        {/* <span>b, c</span>
+        <span>d, e</span> */}
       </div>
     </div>
   )
