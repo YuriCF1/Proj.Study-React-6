@@ -22,7 +22,7 @@ const Game = ({
 
     setLetter("")
 
-    letterInputRef.current.focus()
+    letterInputRef.current.focus() //"Current" é o valor atual do useRef
   };
 
   return (
