@@ -56,7 +56,7 @@ const Game = ({
             name="letter"
             maxLength="1"
             required
-            onChange={(e) => setLetter(e.target.value)}
+            onChange={(e) => setLetter(e.target.value)} //PEGANDO O VALOR DO INPUT
             value={letter} //Deixando o input dinâmico
             ref={letterInputRef} //Defini numa referência, como se fosse querySelector. 
 
@@ -67,7 +67,8 @@ const Game = ({
       <div className={style.wrongLettersContainer}>
         <p>Letras já utilizadas</p>
         {wrongLetters.map((letter, index) => (
-          <span key={index}>{letter}</span>
+          letter = letter.toUpperCase(),
+          <span key={index}>{`${letter}, `}</span>
         ))}
         {/* <span>b, c</span>
         <span>d, e</span> */}

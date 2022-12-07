@@ -64,12 +64,47 @@ function App() {
     setpickedCategory(category);
     setLetters(wordLetters);
 
+    console.log(word);
+    console.log(category);
+    console.log(wordLetters);
+
     setGameStage(stages[1].name);
   };
 
-  // Process the letter in the input
+  // Process the letter in the input_______________________________________________________________________________________________
   const verifyLetter = (letter) => {
-    console.log(letter);
+    const normalizeLetter = letter.toLowerCase();
+
+    //Check if letter has already been tried
+    if (
+      guessedLetters.includes(normalizeLetter) ||
+      wrongLetters.includes(normalizeLetter)
+    ) {
+      console.log('Acertadas:', guessedLetters);
+      console.log('Erradas:', wrongLetters);
+      console.log('Tentada:', letter);
+      return;
+    }
+
+    //Push guessed letter or remove a guess
+    if (letters.includes(normalizeLetter)) {
+      setGussedLetters((actualGuessedLetters) => [ //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
+        ...actualGuessedLetters,
+        normalizeLetter,
+      ]);
+    } else {
+      setWrongLetters((actualGuessedLetters) => [
+        ...actualGuessedLetters,
+        normalizeLetter,
+      ]);
+
+      setGuesses((actualGuesses) => [ actualGuesses - 1 ]
+      )
+    }
+
+    console.log('Acertadas:', guessedLetters);
+    console.log('Erradas:', wrongLetters);
+    console.log('Tentada:', letter);
     // setGameStage(stages[2].name);
   };
 
@@ -92,7 +127,6 @@ function App() {
           wrongLetters={wrongLetters}
           guesses={guesses}
           score={score}
-
         />
       )}
       {gameStage === "end" && <GameOver retry={retry} />}
