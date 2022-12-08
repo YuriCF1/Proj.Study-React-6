@@ -115,7 +115,7 @@ function App() {
     setWrongLetters([]);
 
   }
-
+// Check if the guesses ended
   useEffect(() => {
     if (guesses <= 0) {
       //reset all states
@@ -126,6 +126,10 @@ function App() {
 
   },[guesses])
 
+  // Check win condition
+  useEffect(() => {
+
+  }, [])
 
   // Restarts the game
   const retry = () => {
