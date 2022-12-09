@@ -36,7 +36,7 @@ function App() {
   const [guesses, setGuesses] = useState(InitialGuesses);
   const [score, setScore] = useState(0);
 
-  const pickedWordAndCatergory = () => {
+  const pickedWordAndCatergory = useCallback(() => {
     // Pick a random category
     const categories = Object.keys(words);
     let randomCategory = Math.floor(
@@ -49,10 +49,13 @@ function App() {
       words[category][Math.floor(Math.random() * words[category].length)];
 
     return { word, category }; //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
-  };
+  }, [words]);
 
-  // Starts the secret word game
-  const startGame = () => {
+  // Starts the secret word game________________________________________
+  const startGame = useCallback(() => {
+    //Clear states
+    clearLetterStates();
+
     //Pick word and pick category
     const { word, category } = pickedWordAndCatergory();
 
@@ -71,7 +74,7 @@ function App() {
     console.log(wordLetters);
 
     setGameStage(stages[1].name);
-  };
+  }, [pickedWordAndCatergory]); // Quando essa função mudar, o useCallback reconstruirá a startGame, pois a mesma tem tal dependência***************************
 
   // Process the letter in the input_______________________________________________________________________________________________
   const verifyLetter = (letter) => {
@@ -84,7 +87,7 @@ function App() {
     ) {
       console.log('Acertadas:', guessedLetters);
       console.log('Erradas:', wrongLetters);
-      console.log('Tentada:', letter);
+      // console.log('Tentada:', letter);
       return;
     }
 
@@ -94,23 +97,28 @@ function App() {
         ...actualGuessedLetters,
         normalizeLetter,
       ]);
+      console.log('Acertadas:', guessedLetters);
+      
     } else {
       setWrongLetters((actualGuessedLetters) => [
         ...actualGuessedLetters,
         normalizeLetter,
       ]);
-
+      console.log('Erradas:', wrongLetters);
+      
       setGuesses((actualGuesses) => [ actualGuesses - 1 ]
       )
     }
-
-    console.log('Acertadas:', guessedLetters);
-    console.log('Erradas:', wrongLetters);
+    
     console.log('Tentada:', letter);
+
+    // console.log('Acertadas:', guessedLetters);
+    // console.log('Erradas:', wrongLetters);
+    // console.log('Tentada:', letter);
     // setGameStage(stages[2].name);
   };
 
-  const clearStates = () => {
+  const clearLetterStates = () => {
     setGussedLetters([]);
     setWrongLetters([]);
 
@@ -119,7 +127,7 @@ function App() {
   useEffect(() => {
     if (guesses <= 0) {
       //reset all states
-      clearStates()
+      clearLetterStates()
 
       setGameStage(stages[2].name) 
     }
@@ -128,8 +136,22 @@ function App() {
 
   // Check win condition
   useEffect(() => {
+    const uniqueLetters = [...new Set(letters)]
+    console.log('Lista de repetidas',uniqueLetters);
 
-  }, [])
+    // Right word
+    if (guessedLetters.length ===  uniqueLetters.length) {
+      // add score
+      setScore((actualScore => actualScore += 100)) 
+
+      // restart the game with a new word
+      startGame()
+
+    }
+
+      //Todo dado monitorado precisa ser posto no array
+  }, [guessedLetters, letters, startGame]); //NESSE CASO, se esses 2 últimos elementos a mais mudarem, não vai acontecer nada. Porém, ficar atento ao aviso no futuro
+  //Sendo uma função dependente do useEffect, ela irá executar várias vezes. ISSO NÂO PODE, por isso, tem que haver o useCallback na mesma ***********************************
 
   // Restarts the game
   const retry = () => {
