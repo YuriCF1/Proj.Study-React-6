@@ -1,3 +1,6 @@
+// TENTAR FAZE
+// - ACENTOS DAS LETRAS, IGNORAR
+
 //Css
 import "./App.css";
 
