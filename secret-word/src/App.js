@@ -88,32 +88,31 @@ function App() {
       guessedLetters.includes(normalizeLetter) ||
       wrongLetters.includes(normalizeLetter)
     ) {
-      console.log('Acertadas:', guessedLetters);
-      console.log('Erradas:', wrongLetters);
+      console.log("Acertadas:", guessedLetters);
+      console.log("Erradas:", wrongLetters);
       // console.log('Tentada:', letter);
       return;
     }
 
     //Push guessed letter or remove a guess
     if (letters.includes(normalizeLetter)) {
-      setGussedLetters((actualGuessedLetters) => [ //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
+      setGussedLetters((actualGuessedLetters) => [
+        //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
         ...actualGuessedLetters,
         normalizeLetter,
       ]);
-      console.log('Acertadas:', guessedLetters);
-      
+      console.log("Acertadas:", guessedLetters);
     } else {
       setWrongLetters((actualGuessedLetters) => [
         ...actualGuessedLetters,
         normalizeLetter,
       ]);
-      console.log('Erradas:', wrongLetters);
-      
-      setGuesses((actualGuesses) => [ actualGuesses - 1 ]
-      )
+      console.log("Erradas:", wrongLetters);
+
+      setGuesses((actualGuesses) => [actualGuesses - 1]);
     }
-    
-    console.log('Tentada:', letter);
+
+    console.log("Tentada:", letter);
 
     // console.log('Acertadas:', guessedLetters);
     // console.log('Erradas:', wrongLetters);
@@ -124,42 +123,39 @@ function App() {
   const clearLetterStates = () => {
     setGussedLetters([]);
     setWrongLetters([]);
-
-  }
-// Check if the guesses ended
+  };
+  // Check if the guesses ended
   useEffect(() => {
     if (guesses <= 0) {
       //reset all states
-      clearLetterStates()
+      clearLetterStates();
 
-      setGameStage(stages[2].name) 
+      setGameStage(stages[2].name);
     }
-
-  },[guesses])
+  }, [guesses]);
 
   // Check win condition
   useEffect(() => {
-    const uniqueLetters = [...new Set(letters)]
-    console.log('Lista de repetidas',uniqueLetters);
+    const uniqueLetters = [...new Set(letters)];
+    console.log("Lista de repetidas", uniqueLetters);
 
     // Right word
-    if (guessedLetters.length ===  uniqueLetters.length) {
+    if (guessedLetters.length === uniqueLetters.length) {
       // add score
-      setScore((actualScore => actualScore += 100)) 
+      setScore((actualScore) => (actualScore += 100));
 
       // restart the game with a new word
-      startGame()
-
+      startGame();
     }
 
-      //Todo dado monitorado precisa ser posto no array
+    //Todo dado monitorado precisa ser posto no array
   }, [guessedLetters, letters, startGame]); //NESSE CASO, se esses 2 últimos elementos a mais mudarem, não vai acontecer nada. Porém, ficar atento ao aviso no futuro
   //Sendo uma função dependente do useEffect, ela irá executar várias vezes. ISSO NÂO PODE, por isso, tem que haver o useCallback na mesma ***********************************
 
   // Restarts the game
   const retry = () => {
-    setScore(0)
-    setGuesses(InitialGuesses)
+    setScore(0);
+    setGuesses(InitialGuesses);
 
     setGameStage(stages[0].name);
   };
