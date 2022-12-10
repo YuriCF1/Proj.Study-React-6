@@ -28,7 +28,7 @@ const InitialGuesses = 3;
 //__________________________________________________________________________
 function App() {
   const [gameStage, setGameStage] = useState(stages[0].name);
-  const [words] = useState(wordsList);
+  const [allWords] = useState(wordsList);
 
   const [pickedWord, setPickedWord] = useState("");
   const [pickedCategory, setpickedCategory] = useState("");
@@ -39,20 +39,22 @@ function App() {
   const [guesses, setGuesses] = useState(InitialGuesses);
   const [score, setScore] = useState(0);
 
+  // const [backUp, setBackUp] = useState([])
+
   const pickedWordAndCatergory = useCallback(() => {
     // Pick a random category
-    const categories = Object.keys(words);
+    const categories = Object.keys(allWords);
     let randomCategory = Math.floor(
       Math.random() * Object.keys(categories).length
     );
     const category = categories[randomCategory];
 
-    // Pick a random category
+    // Pick a random word in the category
     const word =
-      words[category][Math.floor(Math.random() * words[category].length)];
+      allWords[category][Math.floor(Math.random() * allWords[category].length)];
 
     return { word, category }; //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
-  }, [words]);
+  }, [allWords]);
 
   // Starts the secret word game________________________________________
   const startGame = useCallback(() => {
@@ -60,21 +62,38 @@ function App() {
     clearLetterStates();
 
     //Pick word and pick category
-    const { word, category } = pickedWordAndCatergory();
+    var { word, category } = pickedWordAndCatergory();
 
     //Creating am array of letters
-    let wordLetters = word.split("");
-
+    var wordLetters = word.split("");
     wordLetters = wordLetters.map((letter) => letter.toLowerCase());
+    // setBackUp(wordLetters)
+    
+    let noAcents = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); // Tirando os acentos das letras
+    let arrayNoAcents = noAcents.split("")
+    console.log('Tentativa: ', noAcents);
+    console.log('Tentativa: ', arrayNoAcents);
+
+    // __________________________________________________TESTE
+    // const wita = word.normalize("NFKC")
+    // console.log('Normalizada: ', wita); 
+    
+    // let a = 'Anão'
+    // // let b = a.split('')
+    // let c = a.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Tirando os acentos das letras
+    // console.log('Tentativa: ', c);
+    // __________________________________________________TESTE
 
     //fill state
     setPickedWord(word);
     setpickedCategory(category);
     setLetters(wordLetters);
+    // setLetters(arrayNoAcents);
 
-    console.log(word);
+    console.log('Palavra: ', word);
     console.log(category);
-    console.log(wordLetters);
+    console.log('wordLetters: ', wordLetters);
+    // console.log('Letra da lista: ', wordLetters[1]);
 
     setGameStage(stages[1].name);
   }, [pickedWordAndCatergory]); // Quando essa função mudar, o useCallback reconstruirá a startGame, pois a mesma tem tal dependência***************************
@@ -100,8 +119,27 @@ function App() {
         //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
         ...actualGuessedLetters,
         normalizeLetter,
+
+    // if (letters.includes(normalizeLetter)) {
+    //   let indexOfLetter = letters.indexOf(normalizeLetter)
+    //   console.log(indexOfLetter);
+    //   let anotherLetter = backUp[indexOfLetter]
+    //   console.log('TRUE');
+
+    //   setGussedLetters((actualGuessedLetters) => [
+    //     //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
+    //     ...actualGuessedLetters,
+    //     // normalizeLetter,
+    //     anotherLetter,
       ]);
-      console.log("Acertadas:", guessedLetters);
+
+      // console.log('Backup: ', backUp);
+      // console.log('Backup: ', backUp[indexOfLetter]);
+
+      // console.log(normalizeLetter);
+      // console.log(wordLetters);
+      // console.log('INDEX: ', wordLetters[indexOfLetter])
+      // console.log("Acertadas:", guessedLetters);
     } else {
       setWrongLetters((actualGuessedLetters) => [
         ...actualGuessedLetters,
@@ -124,6 +162,7 @@ function App() {
     setGussedLetters([]);
     setWrongLetters([]);
   };
+
   // Check if the guesses ended
   useEffect(() => {
     if (guesses <= 0) {

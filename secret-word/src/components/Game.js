@@ -67,11 +67,8 @@ const Game = ({
       <div className={style.wrongLettersContainer}>
         <p>Letras já utilizadas</p>
         {wrongLetters.map((letter, index) => (
-          letter = letter.toUpperCase(),
           <span key={index}>{`${letter}, `}</span>
         ))}
-        {/* <span>b, c</span>
-        <span>d, e</span> */}
       </div>
     </div>
   );
