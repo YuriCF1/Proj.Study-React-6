@@ -11,6 +11,8 @@ const Game = ({
   wrongLetters,
   guesses,
   score,
+
+  originals
 }) => {
   const [letter, setLetter] = useState("");
   const letterInputRef = useRef(null)
@@ -39,11 +41,11 @@ const Game = ({
         {letters.map((letter, index) =>
           guessedLetters.includes(letter) ? (
             <span key={index} className={style.letter}>
-              {letter}
+              {originals[index]}
             </span>
           ) : (
             <span key={index} className={style.blankSquare}></span>
-          )
+            )
         )}
         {/* <span className={style.letter}>A</span>
         <span className={style.blankSquare}>B</span> */}
@@ -65,7 +67,7 @@ const Game = ({
         </form>
       </div>
       <div className={style.wrongLettersContainer}>
-        <p>Letras já utilizadas</p>
+        <p>Letras erradas</p>
         {wrongLetters.map((letter, index) => (
           <span key={index}>{`${letter}, `}</span>
         ))}

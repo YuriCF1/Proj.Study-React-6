@@ -39,7 +39,7 @@ function App() {
   const [guesses, setGuesses] = useState(InitialGuesses);
   const [score, setScore] = useState(0);
 
-  // const [backUp, setBackUp] = useState([])
+  const [originals, setOriginals] = useState([])
 
   const pickedWordAndCatergory = useCallback(() => {
     // Pick a random category
@@ -67,7 +67,7 @@ function App() {
     //Creating am array of letters
     var wordLetters = word.split("");
     wordLetters = wordLetters.map((letter) => letter.toLowerCase());
-    // setBackUp(wordLetters)
+    setOriginals(wordLetters)
     
     let noAcents = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); // Tirando os acentos das letras
     let arrayNoAcents = noAcents.split("")
@@ -87,11 +87,11 @@ function App() {
     //fill state
     setPickedWord(word);
     setpickedCategory(category);
-    setLetters(wordLetters);
-    // setLetters(arrayNoAcents);
+    // setLetters(wordLetters);
+    setLetters(arrayNoAcents);
 
     console.log('Palavra: ', word);
-    console.log(category);
+    // console.log(category);
     console.log('wordLetters: ', wordLetters);
     // console.log('Letra da lista: ', wordLetters[1]);
 
@@ -114,27 +114,28 @@ function App() {
     }
 
     //Push guessed letter or remove a guess
-    if (letters.includes(normalizeLetter)) {
-      setGussedLetters((actualGuessedLetters) => [
-        //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
-        ...actualGuessedLetters,
-        normalizeLetter,
-
     // if (letters.includes(normalizeLetter)) {
-    //   let indexOfLetter = letters.indexOf(normalizeLetter)
-    //   console.log(indexOfLetter);
-    //   let anotherLetter = backUp[indexOfLetter]
-    //   console.log('TRUE');
-
     //   setGussedLetters((actualGuessedLetters) => [
     //     //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
     //     ...actualGuessedLetters,
-    //     // normalizeLetter,
-    //     anotherLetter,
+    //     normalizeLetter,
+
+    if (letters.includes(normalizeLetter)) {
+      let indexOfLetter = letters.indexOf(normalizeLetter)
+      console.log('Index', indexOfLetter);
+      let anotherLetter = originals[indexOfLetter]
+      console.log('TRUE');
+
+      setGussedLetters((actualGuessedLetters) => [
+        //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
+        ...actualGuessedLetters,
+        // normalizeLetter,
+        anotherLetter,
       ]);
 
-      // console.log('Backup: ', backUp);
-      // console.log('Backup: ', backUp[indexOfLetter]);
+      console.log('originals: ', originals);
+      console.log('originals: ', originals[indexOfLetter]);
+      console.log(guessedLetters);
 
       // console.log(normalizeLetter);
       // console.log(wordLetters);
@@ -176,7 +177,7 @@ function App() {
   // Check win condition
   useEffect(() => {
     const uniqueLetters = [...new Set(letters)];
-    console.log("Lista de repetidas", uniqueLetters);
+    // console.log("Lista de repetidas", uniqueLetters);
 
     // Right word
     if (guessedLetters.length === uniqueLetters.length) {
@@ -213,6 +214,8 @@ function App() {
           wrongLetters={wrongLetters}
           guesses={guesses}
           score={score}
+
+          originals={originals}
         />
       )}
       {gameStage === "end" && <GameOver retry={retry} />}
