@@ -23,7 +23,7 @@ const stages = [
   { id: 3, name: "end" },
 ];
 
-const InitialGuesses = 3;
+const InitialGuesses = 30;
 
 //__________________________________________________________________________
 function App() {
