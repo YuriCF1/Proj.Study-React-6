@@ -52,3 +52,11 @@
 .wrongLettersContainer {
     text-transform: uppercase;
 }
+
+.home {
+    padding-top: 5rem;
+}
+
+.home button {
+    background-color: black;
+}

@@ -1,3 +1,5 @@
+// Mudar a cor quando acertar
+
 import style from "./Game.module.css";
 
 import React, { useRef, useState } from "react";
@@ -11,6 +13,7 @@ const Game = ({
   wrongLetters,
   guesses,
   score,
+  retry,
 
   originals,
 }) => {
@@ -40,7 +43,6 @@ const Game = ({
       <div className={style.wordContainer}>
         {letters.map((letra, index) => {
           if (guessedLetters.includes(letra)) {
-            // console.log("Encontrada!!");
             // console.log('Letra encontrada!!: ', originals[index]);
             return (
               <span key={index} className={style.letter}>
@@ -48,7 +50,6 @@ const Game = ({
               </span>
             );
           } else {
-            // console.log("Nao entrada?!");
             return <span key={index} className={style.blankSquare}></span>;
           }
         })}
@@ -85,6 +86,9 @@ const Game = ({
         {wrongLetters.map((letter, index) => (
           <span key={index}>{`${letter}, `}</span>
         ))}
+      </div>
+      <div className={style.home}>
+        <button onClick={retry}>Tela inicial</button>
       </div>
     </div>
   );

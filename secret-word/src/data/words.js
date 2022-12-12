@@ -1,16 +1,27 @@
-// export const wordsList = {
-//     carro: ["Motor", "Porta", "Capô", "Pneu", "Antena"],
-//     fruta: ["Banana", "Maçã", "Pêra", "Mamão", "Laranja"],
-//     corpo: ["Braço", "Perna", "Cérebro", "Pescoço", "Olhos"],
-//     computador: ["Mouse", "Teclado", "Monitor", "Gabinete"],
-//     programação: ["Linguagem", "Framework", "JavaScript", "React"],
-//     alimento: ["Arroz", "Feijão", "Carne", "Leite", "Ovo"],
-//   }
 export const wordsList = {
-    carro: ["a", "b", "c"],
-    d: ["d", "e", "f"],
-
+    Carro: ["Motor", "Porta", "Capô", "Pneu", "Antena"],
+    Fruta: ["Banana", "Maçã", "Pêra", "Mamão", "Laranja"],
+    Corpo: ["Braço", "Perna", "Cérebro", "Pescoço", "Olhos"],
+    Computador: ["Mouse", "Teclado", "Monitor", "Gabinete"],
+    Programação: ["Linguagem", "Framework", "JavaScript", "React"],
+    Alimento: ["Arroz", "Feijão", "Carne", "Leite", "Ovo"],
   }
+
+// export const wordsList = {
+//     Carro: ["Motor", "Porta", "Capô", "Pneu", "Antena"],
+//     Fruta: ["Banana", "Maçã", "Pêra", "Mamão", "Laranja"],
+//     Corpo: ["Braço", "Perna", "Cérebro", "Pescoço", "Olhos"],
+//     Computador: ["Mouse", "Teclado", "Monitor", "Gabinete"],
+//     Animal: ["Anta", "Ornitorrinco", "Gaivota", "Guepardo"],
+//     Alimento: ["Arroz", "Feijão", "Carne", "Leite", "Ovo"],
+//   }
+
+// export const wordsList = {
+//     // carro: ["a", "b", "c"],
+//     // carro: ["a", "b", "c"],
+//     a: ["d"],
+//     b: ["f"],
+//   }
 
 // Testing the letters with accents
 // export const wordsList = {
