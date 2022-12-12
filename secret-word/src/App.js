@@ -41,6 +41,8 @@ function App() {
 
   const [originals, setOriginals] = useState([])
 
+  // const [used, setUsed] = useState([])
+
   const pickedWordAndCatergory = useCallback(() => {
     // Pick a random category
     const categories = Object.keys(allWords);
@@ -71,8 +73,8 @@ function App() {
     
     let noAcents = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); // Tirando os acentos das letras
     let arrayNoAcents = noAcents.split("")
-    console.log('Tentativa: ', noAcents);
-    console.log('Tentativa: ', arrayNoAcents);
+    console.log('Sem assento: ', noAcents);
+    console.log('Array sem assento: ', arrayNoAcents);
 
     // __________________________________________________TESTE
     // const wita = word.normalize("NFKC")
@@ -90,10 +92,8 @@ function App() {
     // setLetters(wordLetters);
     setLetters(arrayNoAcents);
 
-    console.log('Palavra: ', word);
-    // console.log(category);
-    console.log('wordLetters: ', wordLetters);
-    // console.log('Letra da lista: ', wordLetters[1]);
+    console.log('Palavra com assento: ', word);
+    console.log('Array com assento: ', wordLetters);
 
     setGameStage(stages[1].name);
   }, [pickedWordAndCatergory]); // Quando essa função mudar, o useCallback reconstruirá a startGame, pois a mesma tem tal dependência***************************
@@ -123,19 +123,19 @@ function App() {
     if (letters.includes(normalizeLetter)) {
       let indexOfLetter = letters.indexOf(normalizeLetter)
       console.log('Index', indexOfLetter);
-      let anotherLetter = originals[indexOfLetter]
+      // let anotherLetter = originals[indexOfLetter]
       console.log('TRUE');
 
       setGussedLetters((actualGuessedLetters) => [
         //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
         ...actualGuessedLetters,
-        // normalizeLetter,
-        anotherLetter,
+        normalizeLetter,
+        // anotherLetter,
       ]);
 
-      console.log('originals: ', originals);
-      console.log('originals: ', originals[indexOfLetter]);
-      console.log(guessedLetters);
+      console.log('Array original: ', originals);
+      console.log('Letra original: ', originals[indexOfLetter]);
+      console.log('Letras tentadas', guessedLetters);
 
       // console.log(normalizeLetter);
       // console.log(wordLetters);
@@ -150,9 +150,6 @@ function App() {
 
       setGuesses((actualGuesses) => [actualGuesses - 1]);
     }
-
-    console.log("Tentada:", letter);
-
     // console.log('Acertadas:', guessedLetters);
     // console.log('Erradas:', wrongLetters);
     // console.log('Tentada:', letter);

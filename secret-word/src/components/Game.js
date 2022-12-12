@@ -12,19 +12,19 @@ const Game = ({
   guesses,
   score,
 
-  originals
+  originals,
 }) => {
-  const [letter, setLetter] = useState("");
-  const letterInputRef = useRef(null)
+  const [letterInput, setLetterInput] = useState("");
+  const letterInputRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    verifyLetter(letter)
+    verifyLetter(letterInput);
 
-    setLetter("")
+    setLetterInput("");
 
-    letterInputRef.current.focus() //"Current" é o valor atual do useRef
+    letterInputRef.current.focus(); //"Current" é o valor atual do useRef
   };
 
   return (
@@ -38,7 +38,22 @@ const Game = ({
       </h3>
       <p>Você ainda tem {guesses} tentativa(s)</p>
       <div className={style.wordContainer}>
-        {letters.map((letter, index) =>
+        {letters.map((letra, index) => {
+          if (guessedLetters.includes(letra)) {
+            console.log("Encontrada!!");
+            console.log('Letra encontrada!!: ', originals[index]);
+            return (
+              <span key={index} className={style.letter}>
+                {originals[index]}
+              </span>
+            );
+          } else {
+            console.log("Nao entrada?!");
+            return <span key={index} className={style.blankSquare}></span>;
+          }
+        })}
+
+        {/* {letters.map((letter, index) =>
           guessedLetters.includes(letter) ? (
             <span key={index} className={style.letter}>
               {originals[index]}
@@ -46,7 +61,7 @@ const Game = ({
           ) : (
             <span key={index} className={style.blankSquare}></span>
             )
-        )}
+        )} */}
         {/* <span className={style.letter}>A</span>
         <span className={style.blankSquare}>B</span> */}
       </div>
@@ -58,10 +73,9 @@ const Game = ({
             name="letter"
             maxLength="1"
             required
-            onChange={(e) => setLetter(e.target.value)} //PEGANDO O VALOR DO INPUT
-            value={letter} //Deixando o input dinâmico
-            ref={letterInputRef} //Defini numa referência, como se fosse querySelector. 
-
+            onChange={(e) => setLetterInput(e.target.value)} //PEGANDO O VALOR DO INPUT
+            value={letterInput} //Deixando o input dinâmico
+            ref={letterInputRef} //Defini numa referência, como se fosse querySelector.
           />
           <button>Jogar </button>
         </form>
