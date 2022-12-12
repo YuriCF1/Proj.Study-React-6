@@ -39,24 +39,36 @@ function App() {
   const [guesses, setGuesses] = useState(InitialGuesses);
   const [score, setScore] = useState(0);
 
-  const [originals, setOriginals] = useState([])
+  const [originals, setOriginals] = useState([]);
 
-  // const [used, setUsed] = useState([])
+  const [used, setUsed] = useState([]);
 
+  // Pick a random category and word
   const pickedWordAndCatergory = useCallback(() => {
-    // Pick a random category
     const categories = Object.keys(allWords);
     let randomCategory = Math.floor(
       Math.random() * Object.keys(categories).length
     );
     const category = categories[randomCategory];
 
-    // Pick a random word in the category
     const word =
-      allWords[category][Math.floor(Math.random() * allWords[category].length)];
+    allWords[category][Math.floor(Math.random() * allWords[category].length)];
+    console.log("Palavra de agora: ", word);
+    
+    
+    if (used.includes(word)) {
+      console.log("Já tem");
+      return pickedWordAndCatergory()
+    } else if (!used.includes(word)) {
+      setUsed((actualUsed) => [...actualUsed, word]);
+      console.log("Nao tem");
+      return { word, category }; //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
+    } 
+    // else if (used.length ===) {
 
-    return { word, category }; //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
-  }, [allWords]);
+    // }
+
+  }, [allWords, used]);
 
   // Starts the secret word game________________________________________
   const startGame = useCallback(() => {
@@ -66,36 +78,39 @@ function App() {
     //Pick word and pick category
     var { word, category } = pickedWordAndCatergory();
 
-    //Creating am array of letters
-    var wordLetters = word.split("");
-    wordLetters = wordLetters.map((letter) => letter.toLowerCase());
-    setOriginals(wordLetters)
-    
-    let noAcents = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); // Tirando os acentos das letras
-    let arrayNoAcents = noAcents.split("")
-    console.log('Sem assento: ', noAcents);
-    console.log('Array sem assento: ', arrayNoAcents);
+      //Creating am array of letters
+      var wordLetters = word.split("");
+      wordLetters = wordLetters.map((letter) => letter.toLowerCase());
+      setOriginals(wordLetters);
 
-    // __________________________________________________TESTE
-    // const wita = word.normalize("NFKC")
-    // console.log('Normalizada: ', wita); 
-    
-    // let a = 'Anão'
-    // // let b = a.split('')
-    // let c = a.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Tirando os acentos das letras
-    // console.log('Tentativa: ', c);
-    // __________________________________________________TESTE
+      let noAcents = word
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase(); // Tirando os acentos das letras
+      let arrayNoAcents = noAcents.split("");
+      // console.log('Sem assento: ', noAcents);
+      // console.log('Array sem assento: ', arrayNoAcents);
 
-    //fill state
-    setPickedWord(word);
-    setpickedCategory(category);
-    // setLetters(wordLetters);
-    setLetters(arrayNoAcents);
+      // __________________________________________________TESTE
+      // const wita = word.normalize("NFKC")
+      // console.log('Normalizada: ', wita);
 
-    console.log('Palavra com assento: ', word);
-    console.log('Array com assento: ', wordLetters);
+      // let a = 'Anão'
+      // // let b = a.split('')
+      // let c = a.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Tirando os acentos das letras
+      // console.log('Tentativa: ', c);
+      // __________________________________________________TESTE
 
-    setGameStage(stages[1].name);
+      //fill state
+      setPickedWord(word);
+      setpickedCategory(category);
+      // setLetters(wordLetters);
+      setLetters(arrayNoAcents);
+
+      // console.log('Palavra com assento: ', word);
+      // console.log('Array com assento: ', wordLetters);
+
+      setGameStage(stages[1].name);
   }, [pickedWordAndCatergory]); // Quando essa função mudar, o useCallback reconstruirá a startGame, pois a mesma tem tal dependência***************************
 
   // Process the letter in the input_______________________________________________________________________________________________
@@ -107,8 +122,8 @@ function App() {
       guessedLetters.includes(normalizeLetter) ||
       wrongLetters.includes(normalizeLetter)
     ) {
-      console.log("Acertadas:", guessedLetters);
-      console.log("Erradas:", wrongLetters);
+      // console.log("Acertadas:", guessedLetters);
+      // console.log("Erradas:", wrongLetters);
       // console.log('Tentada:', letter);
       return;
     }
@@ -121,10 +136,10 @@ function App() {
     //     normalizeLetter,
 
     if (letters.includes(normalizeLetter)) {
-      let indexOfLetter = letters.indexOf(normalizeLetter)
-      console.log('Index', indexOfLetter);
+      // let indexOfLetter = letters.indexOf(normalizeLetter) //Inútil?
+      // console.log('Index', indexOfLetter);
       // let anotherLetter = originals[indexOfLetter]
-      console.log('TRUE');
+      // console.log('TRUE');
 
       setGussedLetters((actualGuessedLetters) => [
         //Retornando como objeto usando chaves. Se for colchetes, dá erro, pois vira 'array'
@@ -133,9 +148,9 @@ function App() {
         // anotherLetter,
       ]);
 
-      console.log('Array original: ', originals);
-      console.log('Letra original: ', originals[indexOfLetter]);
-      console.log('Letras tentadas', guessedLetters);
+      // console.log('Array original: ', originals);
+      // console.log('Letra original: ', originals[indexOfLetter]);
+      console.log("Letras tentadas", guessedLetters);
 
       // console.log(normalizeLetter);
       // console.log(wordLetters);
@@ -146,7 +161,7 @@ function App() {
         ...actualGuessedLetters,
         normalizeLetter,
       ]);
-      console.log("Erradas:", wrongLetters);
+      // console.log("Erradas:", wrongLetters);
 
       setGuesses((actualGuesses) => [actualGuesses - 1]);
     }
@@ -197,6 +212,10 @@ function App() {
     setGameStage(stages[0].name);
   };
 
+  useEffect(() => {
+    console.log("Palavras já escolhidas: ", used);
+  }, [used]);
+
   return (
     <div className="App">
       {/* <StartScreen /> */}
@@ -211,7 +230,6 @@ function App() {
           wrongLetters={wrongLetters}
           guesses={guesses}
           score={score}
-
           originals={originals}
         />
       )}

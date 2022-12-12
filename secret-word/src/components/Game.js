@@ -40,15 +40,15 @@ const Game = ({
       <div className={style.wordContainer}>
         {letters.map((letra, index) => {
           if (guessedLetters.includes(letra)) {
-            console.log("Encontrada!!");
-            console.log('Letra encontrada!!: ', originals[index]);
+            // console.log("Encontrada!!");
+            // console.log('Letra encontrada!!: ', originals[index]);
             return (
               <span key={index} className={style.letter}>
                 {originals[index]}
               </span>
             );
           } else {
-            console.log("Nao entrada?!");
+            // console.log("Nao entrada?!");
             return <span key={index} className={style.blankSquare}></span>;
           }
         })}
