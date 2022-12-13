@@ -1,11 +1,13 @@
 // TENTAR FAZE
 // - ACENTOS DAS LETRAS, IGNORAR
+// Mudar a cor quando acertar
+// Salvar a palavra no local storage para não mudar ao recarregar
 
 //Css
 import "./App.css";
 
 //React
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 //Data - words
 //É uma variável, não tem o default, importa assim. "Com chaves"
@@ -15,6 +17,7 @@ import { wordsList } from "./data/words";
 import StartScreen from "./components/StartScreen";
 import Game from "./components/Game";
 import GameOver from "./components/GameOver";
+
 
 //Estágios do jogo
 const stages = [
@@ -43,23 +46,26 @@ function App() {
   
   const [used, setUsed] = useState([]);
 
+  const palavra = useRef()
+  const [wordGuessed, setWordGuessed] = useState(false)
+  
   let counter = 0;
   for (let i = 0; i < Object.keys(allWords).length; i++) {
     counter += Object.values(allWords)[i].length
   }
-
+  
   console.log(counter);
-
+  
   // Pick a random category and word
   const pickedWordAndCatergory = useCallback(() => {
     const categories = Object.keys(allWords);
     let randomCategory = Math.floor(
       Math.random() * Object.keys(categories).length
-    );
-    const category = categories[randomCategory];
-
-    const word =
-    allWords[category][Math.floor(Math.random() * allWords[category].length)];
+      );
+      const category = categories[randomCategory];
+      
+      const word =
+      allWords[category][Math.floor(Math.random() * allWords[category].length)];
     console.log("Palavra de agora: ", word);
     
     
@@ -76,6 +82,8 @@ function App() {
   const startGame = useCallback(() => {
     //Clear states
     clearLetterStates();
+    setWordGuessed(false)
+
 
     //Pick word and pick category
     if (used.length !== counter) {
@@ -179,9 +187,9 @@ function App() {
       // add score
       setScore((actualScore) => (actualScore += 100));
 
-      // *restart the game with a new word*
+      // ******************************restart the game with a new word******************************
+      setWordGuessed(true)
       setTimeout(startGame, 1000)
-      // startGame();
     }
 
     //Todo dado monitorado precisa ser posto no array
@@ -200,6 +208,23 @@ function App() {
   useEffect(() => {
     console.log("Palavras já escolhidas: ", used);
   }, [used]);
+  
+  const show = (w)=> {
+    if(w) {
+      console.log('Div: ', w.classList);
+      w.classList.remove('Game_letter__uXOTj');
+      w.classList.add('Game_letter__uXOTj');
+      w.parentNode.style.cssText = 'color: red' 
+      // Game_letterRight__vS+Vo 
+    }
+    // if(w && wordGuessed) {
+    //   w.style.cssText = 'color: green' 
+    //   console.log('Div: ', w);
+    // } else if ((w && !wordGuessed)) {
+    //   w.style.cssText = 'color: black' 
+      
+    // }
+  }
 
   return (
     <div className="App">
@@ -217,6 +242,8 @@ function App() {
           score={score}
           originals={originals}
           retry={retry}
+          palavra={palavra}
+          show={show}
         />
       )}
       {gameStage === "end" && <GameOver retry={retry} />}
@@ -225,3 +252,33 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+// POSSÍVEL EXEMPLO DE IMPORTAR DOM NODE DA CHILD COMPONENT
+// import React from 'react'
+
+// class Input extends React.Component {
+//   constructor(props) {
+//     super(props)
+//     // create a ref to store the textInput DOM element
+//     this.textInput = React.createRef()
+//   }
+
+//   focus() {
+//     // EXPLANATION: a reference to the node becomes accessible at the current attribute of the ref.
+//     // make the DOM node focus
+//     this.textInput.current.focus();
+//   }
+  
+//   render() {
+//     return (
+//       <input
+//         type="text"
+//         ref={this.textInput}
+//       />
+//     )
+//   }
+// }

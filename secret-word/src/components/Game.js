@@ -1,10 +1,8 @@
-// Mudar a cor quando acertar
-
 import style from "./Game.module.css";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const Game = ({
+export const Game = ({
   verifyLetter,
   pickedWord,
   pickedCategory,
@@ -14,22 +12,28 @@ const Game = ({
   guesses,
   score,
   retry,
-
+  
   originals,
-}) => {
+  palavra,
+  show
+}) => {  
   const [letterInput, setLetterInput] = useState("");
   const letterInputRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     verifyLetter(letterInput);
-
+    
     setLetterInput("");
-
+    
     letterInputRef.current.focus(); //"Current" é o valor atual do useRef
   };
 
+  useEffect(() =>{
+    show(palavra.current) 
+}, )
+  
   return (
     <div className={style.game}>
       <p className={style.points}>
@@ -45,7 +49,7 @@ const Game = ({
           if (guessedLetters.includes(letra)) {
             // console.log('Letra encontrada!!: ', originals[index]);
             return (
-              <span key={index} className={style.letter}>
+              <span key={index} className={style.letterRight}  ref={palavra}>
                 {originals[index]}
               </span>
             );
@@ -57,12 +61,12 @@ const Game = ({
         {/* {letters.map((letter, index) =>
           guessedLetters.includes(letter) ? (
             <span key={index} className={style.letter}>
-              {originals[index]}
+            {originals[index]}
             </span>
-          ) : (
-            <span key={index} className={style.blankSquare}></span>
-            )
-        )} */}
+            ) : (
+              <span key={index} className={style.blankSquare}></span>
+              )
+            )} */}
         {/* <span className={style.letter}>A</span>
         <span className={style.blankSquare}>B</span> */}
       </div>
@@ -77,7 +81,7 @@ const Game = ({
             onChange={(e) => setLetterInput(e.target.value)} //PEGANDO O VALOR DO INPUT
             value={letterInput} //Deixando o input dinâmico
             ref={letterInputRef} //Defini numa referência, como se fosse querySelector.
-          />
+            />
           <button>Jogar </button>
         </form>
       </div>
@@ -85,7 +89,7 @@ const Game = ({
         <p>Letras erradas</p>
         {wrongLetters.map((letter, index) => (
           <span key={index}>{`${letter}, `}</span>
-        ))}
+          ))}
       </div>
       <div className={style.home}>
         <button onClick={retry}>Tela inicial</button>
