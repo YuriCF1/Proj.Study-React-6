@@ -32,7 +32,7 @@ export const Game = ({
 
   useEffect(() =>{
     show(palavra.current) 
-}, )
+}, [guessedLetters, show, palavra])
   
   return (
     <div className={style.game}>
@@ -44,12 +44,13 @@ export const Game = ({
         Dica sobre a palavra: <span>{pickedCategory}</span>
       </h3>
       <p>Você ainda tem {guesses} tentativa(s)</p>
-      <div className={style.wordContainer}>
+      <div className={style.wordContainer} ref={palavra}>
         {letters.map((letra, index) => {
           if (guessedLetters.includes(letra)) {
             // console.log('Letra encontrada!!: ', originals[index]);
             return (
-              <span key={index} className={style.letterRight}  ref={palavra}>
+              // <span key={index} ref={palavra}>
+              <span key={index} className={style.letter}>
                 {originals[index]}
               </span>
             );

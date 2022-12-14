@@ -47,7 +47,7 @@ function App() {
   const [used, setUsed] = useState([]);
 
   const palavra = useRef()
-  const [wordGuessed, setWordGuessed] = useState(false)
+  const [wordGuessed, setWordGuessed] = useState()
   
   let counter = 0;
   for (let i = 0; i < Object.keys(allWords).length; i++) {
@@ -210,20 +210,20 @@ function App() {
   }, [used]);
   
   const show = (w)=> {
-    if(w) {
-      console.log('Div: ', w.classList);
-      w.classList.remove('Game_letter__uXOTj');
-      w.classList.add('Game_letter__uXOTj');
-      w.parentNode.style.cssText = 'color: red' 
-      // Game_letterRight__vS+Vo 
-    }
-    // if(w && wordGuessed) {
-    //   w.style.cssText = 'color: green' 
-    //   console.log('Div: ', w);
-    // } else if ((w && !wordGuessed)) {
-    //   w.style.cssText = 'color: black' 
-      
-    // }
+   if (wordGuessed) {
+      w.classList.remove('Game_wordContainer__Qq1kP');
+      w.classList.add('Game_wordContainerRight__8ALVU');
+   } else if (!wordGuessed) {
+      w.classList.remove('Game_wordContainerRight__8ALVU');
+      w.classList.add ('Game_wordContainer__Qq1kP');
+   }
+ 
+  //   if(w && wordGuessed) {
+  //     w.classList.remove('Game_letter__uXOTj');
+  //     w.classList.add('Game_letterRight__vS+Vo');
+  //   } else if (w && !wordGuessed) {
+  //     w.style.cssText = 'color: black'       
+  //   }
   }
 
   return (

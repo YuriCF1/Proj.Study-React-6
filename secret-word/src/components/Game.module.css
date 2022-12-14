@@ -15,6 +15,16 @@
     padding: 1.5em;
     border: 20px solid #ecfa00;
     display: flex;
+    color: #000;
+}
+
+.wordContainerRight {
+    margin: 1.5em;
+    padding: 1.5em;
+    border: 20px solid #ecfa00;
+    display: flex;
+    color: green;
+
 }
 
 .letter, .blankSquare {
@@ -25,20 +35,7 @@
     width: 100px;
     text-transform: uppercase;
     background-color: #fff;
-    color: #000;
-    font-weight: bold;
-
-}
-
-.letterRight {
-    font-size: 70px;
-    line-height: 1.5;
-    border: 3px solid #000;
-    height: 100px;
-    width: 100px;
-    text-transform: uppercase;
-    background-color: #fff;
-    color: rgb(15, 152, 38);
+    /* color: #000; */
     font-weight: bold;
 
 }
