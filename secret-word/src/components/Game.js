@@ -12,28 +12,28 @@ export const Game = ({
   guesses,
   score,
   retry,
-  
+
   originals,
   palavra,
-  show
-}) => {  
+  show,
+}) => {
   const [letterInput, setLetterInput] = useState("");
   const letterInputRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     verifyLetter(letterInput);
-    
+
     setLetterInput("");
-    
+
     letterInputRef.current.focus(); //"Current" é o valor atual do useRef
   };
 
-  useEffect(() =>{
-    show(palavra.current) 
-}, [guessedLetters, show, palavra])
-  
+  useEffect(() => {
+    show(palavra.current);
+  }, [guessedLetters, show, palavra]);
+
   return (
     <div className={style.game}>
       <p className={style.points}>
@@ -82,7 +82,7 @@ export const Game = ({
             onChange={(e) => setLetterInput(e.target.value)} //PEGANDO O VALOR DO INPUT
             value={letterInput} //Deixando o input dinâmico
             ref={letterInputRef} //Defini numa referência, como se fosse querySelector.
-            />
+          />
           <button>Jogar </button>
         </form>
       </div>
@@ -90,7 +90,7 @@ export const Game = ({
         <p>Letras erradas</p>
         {wrongLetters.map((letter, index) => (
           <span key={index}>{`${letter}, `}</span>
-          ))}
+        ))}
       </div>
       <div className={style.home}>
         <button onClick={retry}>Tela inicial</button>
