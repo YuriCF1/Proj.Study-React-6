@@ -26,7 +26,7 @@ const stages = [
   { id: 3, name: "end" },
 ];
 
-const InitialGuesses = 30;
+const InitialGuesses = 3;
 
 //__________________________________________________________________________
 function App() {
@@ -184,6 +184,7 @@ function App() {
 
     // Right word
     if (guessedLetters.length === uniqueLetters.length) {
+      console.log('acertadas: ', uniqueLetters);
       // add score
       setScore((actualScore) => (actualScore += 100));
 
@@ -246,7 +247,7 @@ function App() {
           show={show}
         />
       )}
-      {gameStage === "end" && <GameOver retry={retry} />}
+      {gameStage === "end" && <GameOver retry={retry} score={score} />}
     </div>
   );
 }
