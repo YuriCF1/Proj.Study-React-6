@@ -1,7 +1,8 @@
 // TENTAR FAZE
-// - ACENTOS DAS LETRAS, IGNORAR
-// Mudar a cor quando acertar
+// - ACENTOS DAS LETRAS, IGNORAR - Done
+// Mudar a cor quando acertar - Done
 // Salvar a palavra no local storage para não mudar ao recarregar
+//Fazer botão para as palavras em inglês 
 
 //Css
 import "./App.css";
@@ -18,7 +19,6 @@ import StartScreen from "./components/StartScreen";
 import Game from "./components/Game";
 import GameOver from "./components/GameOver";
 
-
 //Estágios do jogo
 const stages = [
   { id: 1, name: "start" },
@@ -26,7 +26,7 @@ const stages = [
   { id: 3, name: "end" },
 ];
 
-const InitialGuesses = 3;
+const InitialGuesses = 25;
 
 //__________________________________________________________________________
 function App() {
