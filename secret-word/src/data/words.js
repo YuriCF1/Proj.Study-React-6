@@ -7,6 +7,15 @@ export const wordsList = {
     Alimento: ["Arroz", "Feijão", "Carne", "Leite", "Ovo"],
   }
 
+export const wordListEnglish = { 
+  Car: ["Engine", "Door", "Hood", "Tyre", "Antenna"],
+    Fruit: ["Banana", "Apple", "Pear", "Papaya", "Orange"],
+    Body: ["Arm", "Leg", "Brain", "Neck", "Eyes"],
+    Computer: ["Mouse", "Keyboard", "Monitor", "Cabinet"],
+    Programming: ["Language", "Framework", "JavaScript", "React"],
+    Food: ["Rice", "Beans", "Meat", "Milk", "Egg"],
+}
+
 // export const wordsList = {
 //     Carro: ["Motor", "Porta", "Capô", "Pneu", "Antena"],
 //     Fruta: ["Banana", "Maçã", "Pêra", "Mamão", "Laranja"],
