@@ -3,6 +3,7 @@
 // Mudar a cor quando acertar - Done
 // Salvar a palavra no local storage para não mudar ao recarregar
 //Fazer botão para as palavras em inglês 
+// Por que quando carrega, já vai para o game? -- Mudar o setTimeOut
 
 //Css
 import "./App.css";
