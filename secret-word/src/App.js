@@ -85,7 +85,6 @@ function App() {
     clearLetterStates();
     setWordGuessed(false)
 
-
     //Pick word and pick category
     if (used.length !== counter) {
       console.log(gameStage);
