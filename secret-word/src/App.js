@@ -31,6 +31,8 @@ const InitialGuesses = 25;
 
 //__________________________________________________________________________
 function App() {
+  const [gameStart, setGameStart] = useState(true)
+
   const [gameStage, setGameStage] = useState(stages[0].name);
   const [allWords] = useState(wordsList);
   
@@ -126,6 +128,7 @@ function App() {
 
   // Process the letter in the input_______________________________________________________________________________________________
   const verifyLetter = (letter) => {
+    setGameStart(false)
     const normalizeLetter = letter.toLowerCase();
 
     //Check if letter has already been tried
@@ -183,18 +186,23 @@ function App() {
     const uniqueLetters = [...new Set(letters)]; //Tirando as letras repetidas
 
     // Right word
-    if (guessedLetters.length === uniqueLetters.length) {
+    if (guessedLetters.length === uniqueLetters.length && !gameStart) {
       console.log('acertadas: ', uniqueLetters);
       // add score
       setScore((actualScore) => (actualScore += 100));
 
       // ******************************restart the game with a new word******************************
       setWordGuessed(true)
+
+      // if (score !== 0) {
       setTimeout(startGame, 1000)
+      setGameStart(true)
+
+      // }
     }
 
     //Todo dado monitorado precisa ser posto no array
-  }, [guessedLetters, letters, startGame]); //NESSE CASO, se esses 2 últimos elementos a mais mudarem, não vai acontecer nada. Porém, ficar atento ao aviso no futuro
+  }, [guessedLetters, letters, startGame, score, gameStart]); //NESSE CASO, se esses 2 últimos elementos a mais mudarem, não vai acontecer nada. Porém, ficar atento ao aviso no futuro
   //Sendo uma função dependente do useEffect, ela irá executar várias vezes. ISSO NÂO PODE, por isso, tem que haver o useCallback na mesma ***********************************
 
   // Restarts the game
